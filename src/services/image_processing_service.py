@@ -6,13 +6,13 @@ from io import BytesIO
 class ImageProcessingService:
     
     async def get_defect_details(self, file: UploadFile):
-        model = torch.hub.load('C:/Users/Danil/Desktop/Git/pcb-manager-fastapi/yolov5', 'custom', path='C:/Users/Danil/Desktop/Git/pcb-manager-fastapi/best.pt', source='local') 
+        model = torch.hub.load('C:/Users/Danil/Desktop/Git/pcb-manager-processor/yolov5', 'custom', path='C:/Users/Danil/Desktop/Git/pcb-manager-processor/best.pt', source='local') 
         results = model(Image.open(BytesIO(await file.read())))
         json_results = self.__results_to_json(results.xyxy[0], model)
         return json_results
     
     async def generate_report_file(self, file: UploadFile = File(...)) -> str:
-        model = torch.hub.load('C:/Users/Danil/Desktop/Git/pcb-manager-fastapi/yolov5', 'custom', path='C:/Users/Danil/Desktop/Git/pcb-manager-fastapi/best.pt', source='local') 
+        model = torch.hub.load('C:/Users/Danil/Desktop/Git/pcb-manager-processor/yolov5', 'custom', path='C:/Users/Danil/Desktop/Git/pcb-manager-processor/best.pt', source='local') 
         results = model(Image.open(BytesIO(await file.read())))
         r_img = results.render()
         image = Image.fromarray(r_img[0])
