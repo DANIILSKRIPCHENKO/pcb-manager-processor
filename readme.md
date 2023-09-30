@@ -8,7 +8,7 @@ python -m venv venv
 
 * Activate virtual environment
 ```sh
-venv\Scripts\activate.bat
+venv\Scripts\activate
 ```
 
 * Clone yolo v5 repo
@@ -23,7 +23,7 @@ py -m pip install -r yolov5\requirements.txt
 
 * Intsall other packages
 ```sh
-py -m pip install
+py -m pip install -r requirements.txt
 ```
 
 <!-- USAGE EXAMPLES -->
