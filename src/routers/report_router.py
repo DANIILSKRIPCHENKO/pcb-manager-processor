@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from fastapi import Depends, UploadFile, File
-from fastapi.responses import FileResponse
+from fastapi.responses import StreamingResponse
 from services.image_processing_service import ImageProcessingService
 
 router = APIRouter(
@@ -14,5 +14,5 @@ async def generate_report(file: UploadFile = File(...), service = Depends(ImageP
 
 @router.post("/file")
 async def generate_report(file: UploadFile = File(...), service = Depends(ImageProcessingService)):
-    report_file_path = await service.generate_report_file(file)
-    return FileResponse(report_file_path)
+    result_image_bytes = await service.generate_report_file(file)
+    return StreamingResponse(result_image_bytes, media_type="image/jpeg")
