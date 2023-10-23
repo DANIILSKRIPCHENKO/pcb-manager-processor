@@ -11,17 +11,7 @@ python -m venv venv
 venv\Scripts\activate
 ```
 
-* Clone yolo v5 repo
-```sh
-git clone https://github.com/ultralytics/yolov5  # clone
-```
-
-* Intsall packages for yolo v5
-```sh
-py -m pip install -r yolov5\requirements.txt
-```
-
-* Intsall other packages
+* Intsall packages
 ```sh
 py -m pip install -r requirements.txt
 ```
