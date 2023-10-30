@@ -9,11 +9,16 @@ import numpy as np
 
 class ImageProcessingService:
     
-    async def get_defect_details(self, file: UploadFile):
+    async def get_defect_details_from_bytes(self, bytes: bytes):
+        return await self.__get_defect_details_from_bytes(bytes)
+    
+    async def generate_report_file_from_bytes(self, bytes: bytes):
+        return await self.__generate_report_file_from_bytes(bytes)
+    
+    async def __get_defect_details_from_bytes(self, bytes: bytes):
         model = YOLO("best.pt")
-
         result={'detect_objects': None}
-        input_image = self.get_image_from_bytes(await file.read())
+        input_image = self.get_image_from_bytes(bytes)
         predictions = model(input_image)
         predict = self.transform_predict_to_df(predictions, model.model.names)
         detect_res = predict[['name', 'confidence']]
@@ -23,9 +28,9 @@ class ImageProcessingService:
         result['detect_objects'] = json.loads(detect_res.to_json(orient='records'))
         return result
     
-    async def generate_report_file(self, file: UploadFile = File(...)) -> bytes:
+    async def __generate_report_file_from_bytes(self, bytes: bytes) -> bytes:
         model = YOLO("best.pt")
-        input_image = self.get_image_from_bytes(await file.read())
+        input_image = self.get_image_from_bytes(bytes)
         predictions = model(input_image)
         predict = self.transform_predict_to_df(predictions, model.model.names)
         final_image = self.add_bboxs_on_img(image = input_image, predict = predict)
