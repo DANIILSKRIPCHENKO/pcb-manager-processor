@@ -1,5 +1,4 @@
 from fastapi import FastAPI, Depends
-from services.image_processing_service import ImageProcessingService
 from routers import report_router
 import uvicorn
 
